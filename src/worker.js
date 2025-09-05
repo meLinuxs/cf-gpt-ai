@@ -1,15 +1,15 @@
 // 作者信息保护 - 不可篡改
 const AUTHOR_INFO = {
-  name: "林九九的导航页",
-  platform: "进入",
+  name: "林九九的CF AI",
+  platform: "欢迎来到",
   verified: true
 };
 
 // 验证作者信息完整性
 function verifyAuthorInfo() {
   // 直接验证关键信息，避免编码问题
-  if (AUTHOR_INFO.name !== "林九九的导航页" || 
-      AUTHOR_INFO.platform !== "进入" || 
+  if (AUTHOR_INFO.name !== "林九九的CF AI" || 
+      AUTHOR_INFO.platform !== "欢迎来到" || 
       !AUTHOR_INFO.verified) {
     throw new Error("作者信息已被篡改，服务拒绝运行！请保持原始作者信息");
   }
@@ -825,10 +825,10 @@ function getHTML() {
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 CF AI Chat</h1>
+            <h1>🤖 Cloudflare的本地AI</h1>
             <p>支持多模型切换的智能聊天助手</p>
             <div class="author-info" onclick="window.open('https://dh.0991780.top/', '_blank')">
-                <p>📺 作者：<strong>进入：林九九的导航页</strong></p>
+                <p>🤗 进入：<strong>林九九的导航页</strong></p>
             </div>
         </div>
         <div class="main-content">
@@ -872,8 +872,8 @@ function getHTML() {
     <script>
         // 作者信息保护
         const AUTHOR_VERIFICATION = {
-            name: "林九九的导航页",
-            platform: "进入",
+            name: "林九九的CF AI",
+            platform: "欢迎来到",
             required: true
         };
         
@@ -886,9 +886,9 @@ function getHTML() {
                 }
                 
                 for (let element of authorElements) {
-                    if (!element.textContent.includes('进入：林九九的导航页')) {
-                        alert('作者信息已被篡改，服务将停止运行！');
-                        document.body.innerHTML = '<div style="text-align:center;margin-top:50px;"><h1>❌ 服务已停止</h1><p>作者信息被篡改，请保持原始作者信息：进入：林九九的导航页</p></div>';
+                    if (!element.textContent.includes('欢迎来到：林九九的CF AI')) {
+                        alert('出了一点问题');
+                        document.body.innerHTML = '<div style="text-align:center;margin-top:50px;"><h1>❌ 服务已停止</h1><p>出了一点问题</p></div>';
                         return false;
                     }
                 }
@@ -1209,4 +1209,5 @@ function getHTML() {
 </body>
 </html>`;
 }
+
 
