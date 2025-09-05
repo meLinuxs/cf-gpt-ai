@@ -1,20 +1,3 @@
-// 作者信息保护 - 不可篡改
-const AUTHOR_INFO = {
-  name: "林九九的CF AI",
-  platform: "欢迎来到",
-  verified: true
-};
-
-// 验证作者信息完整性
-function verifyAuthorInfo() {
-  // 直接验证关键信息，避免编码问题
-  if (AUTHOR_INFO.name !== "林九九的CF AI" || 
-      AUTHOR_INFO.platform !== "欢迎来到" || 
-      !AUTHOR_INFO.verified) {
-    throw new Error("作者信息已被篡改，服务拒绝运行！请保持原始作者信息");
-  }
-}
-
 // 模型特定参数配置
 function getModelOptimalParams(modelKey, modelId) {
   const baseParams = {
@@ -26,27 +9,26 @@ function getModelOptimalParams(modelKey, modelId) {
     case 'deepseek-r1':
       return {
         ...baseParams,
-        max_tokens: 8192,        // DeepSeek支持大输出
-        temperature: 0.8,        // 思维链推理需要更高创造性，范围0-5
-        top_p: 0.9,              // 范围0.001-1
-        top_k: 50,               // 范围1-50
-        repetition_penalty: 1.1, // 范围0-2
-        frequency_penalty: 0.1,  // 范围-2到2
-        presence_penalty: 0.1    // 范围-2到2
+        max_tokens: 8192,        
+        temperature: 0.8,        
+        top_p: 0.9,              
+        top_k: 50,               
+        repetition_penalty: 1.1, 
+        frequency_penalty: 0.1,  
+        presence_penalty: 0.1    
       };
       
     case 'gpt-oss-120b':
     case 'gpt-oss-20b':
-      // GPT模型使用最简配置，不添加任何额外参数
       return {};
       
     case 'llama-4-scout':
       return {
         ...baseParams,
-        max_tokens: 4096,        // 多模态模型，支持长输出
+        max_tokens: 4096,        
         temperature: 0.75,
         top_p: 0.95,
-        repetition_penalty: 1.1,  // 使用正确的参数名
+        repetition_penalty: 1.1,  
         frequency_penalty: 0.1,
         presence_penalty: 0.1
       };
@@ -54,9 +36,9 @@ function getModelOptimalParams(modelKey, modelId) {
     case 'qwen-coder':
       return {
         ...baseParams,
-        max_tokens: 8192,        // 代码模型需要长输出
-        temperature: 0.3,        // 代码生成需要低随机性
-        top_p: 0.8,              // 范围0-2，Qwen支持
+        max_tokens: 8192,        
+        temperature: 0.3,        
+        top_p: 0.8,              
         top_k: 30,
         repetition_penalty: 1.1,
         frequency_penalty: 0.1,
@@ -66,9 +48,9 @@ function getModelOptimalParams(modelKey, modelId) {
     case 'gemma-3':
       return {
         ...baseParams,
-        max_tokens: 4096,        // 多语言模型
+        max_tokens: 4096,        
         temperature: 0.8,
-        top_p: 0.9,              // 范围0-2，Gemma支持
+        top_p: 0.9,              
         top_k: 40,
         repetition_penalty: 1.0,
         frequency_penalty: 0.1,
@@ -155,19 +137,6 @@ const MODEL_CONFIG = {
 
 export default {
   async fetch(request, env, ctx) {
-    // 验证作者信息完整性
-    try {
-      verifyAuthorInfo();
-    } catch (error) {
-      return new Response(JSON.stringify({ 
-        error: error.message,
-        status: "服务已停止运行"
-      }), {
-        status: 403,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-    
     const url = new URL(request.url);
     
     // 处理CORS
@@ -697,10 +666,6 @@ function getHTML() {
         body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100vh; overflow: hidden; }
         .container { width: 100vw; height: 100vh; background: white; display: flex; flex-direction: column; }
         .header { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 20px; text-align: center; }
-        .author-info { margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.1); border-radius: 20px; display: inline-block; cursor: pointer; transition: all 0.3s ease; }
-        .author-info:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-        .author-info p { margin: 0; font-size: 14px; opacity: 0.9; }
-        .author-info strong { color: #ffd700; }
         .main-content { display: flex; flex: 1; overflow: hidden; }
         .sidebar { width: 300px; min-width: 300px; background: #f8fafc; border-right: 1px solid #e2e8f0; padding: 20px; overflow-y: auto; display: block !important; visibility: visible !important; flex-shrink: 0; }
         .chat-area { flex: 1; display: flex; flex-direction: column; }
@@ -825,11 +790,8 @@ function getHTML() {
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 Cloudflare的本地AI</h1>
+            <h1>🤖 CF AI Chat</h1>
             <p>支持多模型切换的智能聊天助手</p>
-            <div class="author-info" onclick="window.open('https://dh.0991780.top/', '_blank')">
-                <p>🤗 进入：<strong>林九九的导航页</strong></p>
-            </div>
         </div>
         <div class="main-content">
             <div class="sidebar">
@@ -870,58 +832,8 @@ function getHTML() {
         </div>
     </div>
     <script>
-        // 作者信息保护
-        const AUTHOR_VERIFICATION = {
-            name: "林九九的CF AI",
-            platform: "欢迎来到",
-            required: true
-        };
-        
-        function verifyAuthorDisplay() {
-            try {
-                const authorElements = document.querySelectorAll('.author-info strong');
-                if (authorElements.length === 0) {
-                    console.warn('作者信息元素未找到，可能页面还未完全加载');
-                    return true; // 页面加载期间暂时允许通过
-                }
-                
-                for (let element of authorElements) {
-                    if (!element.textContent.includes('欢迎来到：林九九的CF AI')) {
-                        alert('出了一点问题');
-                        document.body.innerHTML = '<div style="text-align:center;margin-top:50px;"><h1>❌ 服务已停止</h1><p>出了一点问题</p></div>';
-                        return false;
-                    }
-                }
-                return true;
-            } catch (error) {
-                console.error('验证作者信息时发生错误:', error);
-                return true; // 发生错误时暂时允许通过，避免破坏页面功能
-            }
-        }
-        
-        // 定期检查作者信息
-        setInterval(verifyAuthorDisplay, 3000);
-        
-        // 全局错误处理
-        window.onerror = function(message, source, lineno, colno, error) {
-            console.error('JavaScript错误:', { message, source, lineno, colno, error });
-            return false; // 不阻止默认错误处理
-        };
-        
-        // 保护侧边栏显示
-        function protectSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            if (sidebar) {
-                sidebar.style.display = 'block';
-                sidebar.style.visibility = 'visible';
-            }
-        }
-        setInterval(protectSidebar, 1000);
-        
         let isAuthenticated = false, currentPassword = '', models = {}, chatHistory = [], currentModel = '';
         window.onload = async function() {
-            // 首次验证作者信息
-            if (!verifyAuthorDisplay()) return;
             try {
                 const response = await fetch('/api/models');
                 models = await response.json();
@@ -948,7 +860,7 @@ function getHTML() {
                 if (currentModel && currentModel !== selectedModel) {
                     chatHistory = [];
                     const messagesDiv = document.getElementById('messages');
-                    messagesDiv.innerHTML = '<div class="message assistant"><div class="message-content">🔄 已切换模型，正在加载历史记录...<br><br>🇨🇳 新模型已配置为中文回复模式。</div></div>';
+                    messagesDiv.innerHTML = '<div class="message assistant"><div class="message-content">🔄 已切换模型，正在加载历史记录...</div></div>';
                 }
                 
                 currentModel = selectedModel;
@@ -1014,7 +926,6 @@ function getHTML() {
         }
         async function sendMessage() {
             try {
-                if (!verifyAuthorDisplay()) return;
                 if (!isAuthenticated || !currentModel) { showError('请先验证身份并选择模型'); return; }
                 const input = document.getElementById('messageInput');
                 const message = input.value.trim();
@@ -1209,5 +1120,3 @@ function getHTML() {
 </body>
 </html>`;
 }
-
-
