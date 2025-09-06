@@ -1,3 +1,10 @@
+// src/worker.js
+export default {
+  async fetch(request, env, ctx) {
+    // 处理请求的逻辑（如返回文本、调用 API 等）
+    return new Response("Hello, Cloudflare Workers!");
+  }
+};
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -688,4 +695,5 @@
     </script>
 </body>
 </html>
+
 
